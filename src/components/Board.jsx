@@ -22,7 +22,7 @@ const Action = () => {
     <div className="text-black min-w-max flex space-x-4">
       <button className="bg-mygreen p-1 active:bg-[#6bcb47]">Pause</button>
       <button className="bg-mygreen p-1 active:bg-[#6bcb47]">Random</button>
-      <select className="text-sm outline-none">
+      <select className="text-sm bg-gray-200 outline-none">
         <option>Glider Gun</option>
         <option>Pulsar</option>
         <option>Maximum Density Still Life</option>
