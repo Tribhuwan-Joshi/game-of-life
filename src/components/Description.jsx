@@ -2,7 +2,7 @@ import gif from "./../assets/ttk.gif";
 
 const Description = () => {
   return (
-    <div className="flex-1 space-y-6">
+    <div className="flex-1  space-y-6">
       <figure>
         <img
           src={gif}
@@ -45,6 +45,9 @@ const Description = () => {
           overpopulation.
         </li>
       </ul>
+      <div>
+        <strong>Note: </strong>You can create cell by clicking on the grid.
+      </div>
     </div>
   );
 };
