@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  h1 {
+    @apply text-2xl tracking-wide font-bold;
+  }
+}
+
+@font-face {
+  font-family: "Orbitron";
+  src: url(/src/assets/Orbitron/Orbitron-VariableFont_wght.ttf);
+}
