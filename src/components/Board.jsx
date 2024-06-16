@@ -7,7 +7,7 @@ const Board = () => {
   ));
 
   return (
-    <div className="flex-1 mt-4 items-center flex flex-col gap-2">
+    <div className="md:flex-1 mt-4 items-center md:flex flex-col gap-2">
       <Action />
       <div className="grid my-8 w-max border-gray-600 border-4 border-double grid-cols-[repeat(50,minmax(0,1fr))]">
         {boxes}
