@@ -3,16 +3,9 @@ import generatePattern from "../utility/patterns";
 
 const Board = () => {
   const [gameState, setGameState] = useState(false); // 0 means game is stop right now
-  const [matrix, setMatrix] = useState(
-    Array.from({ length: 30 }, (_, rowIndex) =>
-      Array.from({ length: 50 }, (_, colIndex) => ({
-        value: 0,
-        rowIndex,
-        colIndex,
-        key: `${rowIndex}-${colIndex}`,
-      }))
-    )
-  );
+  const [matrix, setMatrix] = useState(generatePattern("crazy-corners"));
+
+  const [generationCount, setGenerationCount] = useState(0);
 
   const handleClick = (i, j) => {
     const newMatrix = matrix.map((row, rowIndex) =>
@@ -47,6 +40,7 @@ const Board = () => {
   };
 
   const createRandomPattern = () => {
+    setGameState(0);
     let toFilled = Math.floor(1500 / 4);
     // create random pattern -  fill 50% of block
     const newMatrix = Array(30)
@@ -77,8 +71,8 @@ const Board = () => {
   };
 
   const handlePatternSelection = (e) => {
+    setGameState(0);
     const pattern = e.target.value;
-    console.log("choosed pattern ", pattern);
     const newMatrix = generatePattern(pattern);
     setMatrix(newMatrix);
   };
@@ -105,7 +99,7 @@ const Board = () => {
           ))
         )}
       </div>
-      <p>Generation Count: 12</p>
+      <p>Generation Count: {generationCount}</p>
     </div>
   );
 };
@@ -136,10 +130,14 @@ const Action = ({
         className="text-sm bg-gray-200 outline-none"
         onChange={handlePatternSelection}
       >
+        <option value="" selected>
+          Choose Pattern
+        </option>
         <option value="glider-gun">Glider Gun</option>
         <option value="pulsar">Pulsar</option>
         <option value="max-density">Maximum Density Still Life</option>
         <option value="load">Load Pattern</option>
+        <option value="crazy-corners">Crazy Corners</option>
       </select>
       <button
         className="bg-mygreen p-1  active:bg-[#6bcb47]"
@@ -156,7 +154,7 @@ const Box = ({ handleClick, value, rowIndex, colIndex }) => {
     <div
       className={`box w-2 h-2 md:w-[14px] md:h-[14px] ${
         value ? "bg-mygreen" : ""
-      } border border-gray-600`}
+      } border border-gray-900`}
       onClick={() => handleClick(rowIndex, colIndex)}
     ></div>
   );

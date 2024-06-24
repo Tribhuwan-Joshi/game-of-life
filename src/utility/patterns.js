@@ -2618,6 +2618,281 @@ function generatePattern(patternName) {
     },
   ];
 
+  const crazyCorners = [
+    {
+      row: 0,
+      col: 1,
+    },
+    {
+      row: 0,
+      col: 2,
+    },
+    {
+      row: 0,
+      col: 47,
+    },
+    {
+      row: 0,
+      col: 48,
+    },
+    {
+      row: 1,
+      col: 0,
+    },
+    {
+      row: 1,
+      col: 2,
+    },
+    {
+      row: 1,
+      col: 4,
+    },
+    {
+      row: 1,
+      col: 45,
+    },
+    {
+      row: 1,
+      col: 47,
+    },
+    {
+      row: 1,
+      col: 49,
+    },
+    {
+      row: 2,
+      col: 0,
+    },
+    {
+      row: 2,
+      col: 1,
+    },
+    {
+      row: 2,
+      col: 4,
+    },
+    {
+      row: 2,
+      col: 5,
+    },
+    {
+      row: 2,
+      col: 6,
+    },
+    {
+      row: 2,
+      col: 43,
+    },
+    {
+      row: 2,
+      col: 44,
+    },
+    {
+      row: 2,
+      col: 45,
+    },
+    {
+      row: 2,
+      col: 48,
+    },
+    {
+      row: 2,
+      col: 49,
+    },
+    {
+      row: 4,
+      col: 1,
+    },
+    {
+      row: 4,
+      col: 2,
+    },
+    {
+      row: 4,
+      col: 47,
+    },
+    {
+      row: 4,
+      col: 48,
+    },
+    {
+      row: 5,
+      col: 2,
+    },
+    {
+      row: 5,
+      col: 47,
+    },
+    {
+      row: 6,
+      col: 2,
+    },
+    {
+      row: 6,
+      col: 47,
+    },
+    {
+      row: 10,
+      col: 25,
+    },
+    {
+      row: 11,
+      col: 25,
+    },
+    {
+      row: 12,
+      col: 25,
+    },
+    {
+      row: 15,
+      col: 20,
+    },
+    {
+      row: 15,
+      col: 21,
+    },
+    {
+      row: 15,
+      col: 22,
+    },
+    {
+      row: 15,
+      col: 28,
+    },
+    {
+      row: 15,
+      col: 29,
+    },
+    {
+      row: 15,
+      col: 30,
+    },
+    {
+      row: 18,
+      col: 25,
+    },
+    {
+      row: 19,
+      col: 25,
+    },
+    {
+      row: 20,
+      col: 25,
+    },
+    {
+      row: 23,
+      col: 2,
+    },
+    {
+      row: 23,
+      col: 47,
+    },
+    {
+      row: 24,
+      col: 2,
+    },
+    {
+      row: 24,
+      col: 47,
+    },
+    {
+      row: 25,
+      col: 1,
+    },
+    {
+      row: 25,
+      col: 2,
+    },
+    {
+      row: 25,
+      col: 47,
+    },
+    {
+      row: 25,
+      col: 48,
+    },
+    {
+      row: 27,
+      col: 0,
+    },
+    {
+      row: 27,
+      col: 1,
+    },
+    {
+      row: 27,
+      col: 4,
+    },
+    {
+      row: 27,
+      col: 5,
+    },
+    {
+      row: 27,
+      col: 6,
+    },
+    {
+      row: 27,
+      col: 43,
+    },
+    {
+      row: 27,
+      col: 44,
+    },
+    {
+      row: 27,
+      col: 45,
+    },
+    {
+      row: 27,
+      col: 48,
+    },
+    {
+      row: 27,
+      col: 49,
+    },
+    {
+      row: 28,
+      col: 0,
+    },
+    {
+      row: 28,
+      col: 2,
+    },
+    {
+      row: 28,
+      col: 4,
+    },
+    {
+      row: 28,
+      col: 45,
+    },
+    {
+      row: 28,
+      col: 47,
+    },
+    {
+      row: 28,
+      col: 49,
+    },
+    {
+      row: 29,
+      col: 1,
+    },
+    {
+      row: 29,
+      col: 2,
+    },
+    {
+      row: 29,
+      col: 47,
+    },
+    {
+      row: 29,
+      col: 48,
+    },
+  ];
+
   const newMatrix = Array(30)
     .fill(0)
     .map((_, rowIndex) =>
@@ -2646,9 +2921,65 @@ function generatePattern(patternName) {
     for (let pos of loadPattern) {
       newMatrix[pos.row][pos.col].value = 1;
     }
+  } else {
+    for (let pos of crazyCorners) {
+      newMatrix[pos.row][pos.col].value = 1;
+    }
   }
 
   return newMatrix;
 }
 
-export default generatePattern;
+function simulatePattern(matrix) {
+  const newMatrix = Array(30)
+    .fill(0)
+    .map((_, rowIndex) =>
+      Array(50)
+        .fill(0)
+        .map((_, colIndex) => ({
+          rowIndex,
+          colIndex,
+          value: 0,
+          key: `${rowIndex}-${colIndex}`,
+        }))
+    );
+
+  const rowCount = matrix.length;
+  const colCount = matrix[0].length;
+  const changeArr = [
+    [0, -1],
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [0, 1],
+    [1, 1],
+    [1, 0],
+    [1, -1],
+  ];
+
+  for (let i = 0; i < rowCount; i++) {
+    for (let j = 0; j < colCount; j++) {
+      let liveCount = 0;
+      for (let v of changeArr) {
+        let dx = v[0];
+        let dy = v[1];
+        if (
+          i + dx < rowCount &&
+          i + dx >= 0 &&
+          j + dy < colCount &&
+          j + dy >= 0
+        ) {
+          if (matrix[i + dx][j + dy] == 1) liveCount++;
+        }
+      }
+      if (liveCount < 2 || liveCount > 3)
+        newMatrix[i][j].value = 0; // die by under/over/population
+      else if (liveCount == 3 || (liveCount == 2 && matrix[i][j] == 1))
+        newMatrix[i][j].value = 1;
+    }
+  }
+
+  return newMatrix;
+}
+
+export { generatePattern, simulatePattern };
