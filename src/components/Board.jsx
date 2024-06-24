@@ -1,4 +1,5 @@
 import { useState } from "react";
+import generatePattern from "../utility/patterns";
 
 const Board = () => {
   const [gameState, setGameState] = useState(false); // 0 means game is stop right now
@@ -67,11 +68,17 @@ const Board = () => {
       const col = choosed % 50;
       if (newMatrix[row][col].value == 0) {
         newMatrix[row][col].value = 1;
-        console.log("filled at ", row, col);
         toFilled--;
       }
     }
 
+    setMatrix(newMatrix);
+  };
+
+  const handlePatternSelection = (e) => {
+    const pattern = e.target.value;
+    console.log("choosed pattern ", pattern);
+    const newMatrix = generatePattern(pattern);
     setMatrix(newMatrix);
   };
 
@@ -82,6 +89,7 @@ const Board = () => {
         gameState={gameState}
         setGameState={setGameState}
         createRandomPattern={createRandomPattern}
+        handlePatternSelection={handlePatternSelection}
       />
       <div className="grid my-8 w-max border-gray-600 border-4 border-double grid-cols-[repeat(50,minmax(0,1fr))]">
         {matrix.map((arr) =>
@@ -106,6 +114,7 @@ const Action = ({
   gameState,
   setGameState,
   createRandomPattern,
+  handlePatternSelection,
 }) => {
   return (
     <div className="text-black min-w-max flex space-x-4">
@@ -121,10 +130,15 @@ const Action = ({
       >
         Random
       </button>
-      <select className="text-sm bg-gray-200 outline-none">
-        <option>Glider Gun</option>
-        <option>Pulsar</option>
-        <option>Maximum Density Still Life</option>
+      <select
+        name="choosedPattern"
+        className="text-sm bg-gray-200 outline-none"
+        onChange={handlePatternSelection}
+      >
+        <option value="glider-gun">Glider Gun</option>
+        <option value="pulsar">Pulsar</option>
+        <option value="max-density">Maximum Density Still Life</option>
+        <option value="load">Load Pattern</option>
       </select>
       <button
         className="bg-mygreen p-1  active:bg-[#6bcb47]"
