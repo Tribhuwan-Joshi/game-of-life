@@ -2618,7 +2618,7 @@ function generatePattern(patternName) {
     },
   ];
 
-  const newMatrix = Array(50)
+  const newMatrix = Array(30)
     .fill(0)
     .map((_, rowIndex) =>
       Array(50)
@@ -2632,21 +2632,23 @@ function generatePattern(patternName) {
     );
   if (patternName === "glider-gun")
     for (let pos of gliderPattern) {
-      newMatrix[pos.row][pos.col] = 1;
+      newMatrix[pos.row][pos.col].value = 1;
     }
   else if (patternName === "pulsar") {
     for (let pos of pulsarPattern) {
-      newMatrix[pos.row][pos.col] = 1;
+      newMatrix[pos.row][pos.col].value = 1;
     }
   } else if (patternName == "max-density") {
     for (let pos of maxiDensityPattern) {
-      newMatrix[pos.row][pos.col] = 1;
+      newMatrix[pos.row][pos.col].value = 1;
     }
   } else if (patternName == "load") {
     for (let pos of loadPattern) {
-      newMatrix[pos.row][pos.col] = 1;
+      newMatrix[pos.row][pos.col].value = 1;
     }
   }
+
+  return newMatrix;
 }
 
 export default generatePattern;

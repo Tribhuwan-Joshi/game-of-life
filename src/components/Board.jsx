@@ -4,7 +4,7 @@ import generatePattern from "../utility/patterns";
 const Board = () => {
   const [gameState, setGameState] = useState(false); // 0 means game is stop right now
   const [matrix, setMatrix] = useState(
-    Array.from({ length: 50 }, (_, rowIndex) =>
+    Array.from({ length: 30 }, (_, rowIndex) =>
       Array.from({ length: 50 }, (_, colIndex) => ({
         value: 0,
         rowIndex,
@@ -28,7 +28,7 @@ const Board = () => {
 
   const handleClear = () => {
     setMatrix(
-      Array(50)
+      Array(30)
         .fill(null)
         .map((_, rowIndex) =>
           Array(50)
@@ -47,9 +47,9 @@ const Board = () => {
   };
 
   const createRandomPattern = () => {
-    let toFilled = Math.floor(2500 / 4);
+    let toFilled = Math.floor(1500 / 4);
     // create random pattern -  fill 50% of block
-    const newMatrix = Array(50)
+    const newMatrix = Array(30)
       .fill(0)
       .map((_, rowIndex) =>
         Array(50)
@@ -63,9 +63,10 @@ const Board = () => {
       );
 
     while (toFilled > 0) {
-      let choosed = Math.floor(Math.random() * 2500);
+      let choosed = Math.floor(Math.random() * 1500);
       const row = Math.floor(choosed / 50);
       const col = choosed % 50;
+      console.log(row, col, choosed);
       if (newMatrix[row][col].value == 0) {
         newMatrix[row][col].value = 1;
         toFilled--;
@@ -153,7 +154,7 @@ const Action = ({
 const Box = ({ handleClick, value, rowIndex, colIndex }) => {
   return (
     <div
-      className={`box w-2 h-2 md:w-[9px] md:h-[9px] ${
+      className={`box w-2 h-2 md:w-[14px] md:h-[14px] ${
         value ? "bg-mygreen" : ""
       } border border-gray-600`}
       onClick={() => handleClick(rowIndex, colIndex)}
