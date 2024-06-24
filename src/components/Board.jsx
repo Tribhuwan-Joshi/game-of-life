@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const Board = () => {
-  const [gameState, setGameState] = useState(0); // 0 means game is stop right now
+  const [gameState, setGameState] = useState(false); // 0 means game is stop right now
   const [matrix, setMatrix] = useState(
     Array.from({ length: 50 }, (_, rowIndex) =>
       Array.from({ length: 50 }, (_, colIndex) => ({
@@ -25,9 +25,64 @@ const Board = () => {
     setMatrix(newMatrix);
   };
 
+  const handleClear = () => {
+    setMatrix(
+      Array(50)
+        .fill(null)
+        .map((_, rowIndex) =>
+          Array(50)
+            .fill(null)
+            .map((_, colIndex) => {
+              return {
+                value: 0,
+                rowIndex,
+                colIndex,
+                key: `${rowIndex}-${colIndex}`,
+              };
+            })
+        )
+    );
+    setGameState(false);
+  };
+
+  const createRandomPattern = () => {
+    let toFilled = Math.floor(2500 / 4);
+    // create random pattern -  fill 50% of block
+    const newMatrix = Array(50)
+      .fill(0)
+      .map((_, rowIndex) =>
+        Array(50)
+          .fill(0)
+          .map((_, colIndex) => ({
+            value: 0,
+            rowIndex,
+            colIndex,
+            key: `${rowIndex}-${colIndex}`,
+          }))
+      );
+
+    while (toFilled > 0) {
+      let choosed = Math.floor(Math.random() * 2500);
+      const row = Math.floor(choosed / 50);
+      const col = choosed % 50;
+      if (newMatrix[row][col].value == 0) {
+        newMatrix[row][col].value = 1;
+        console.log("filled at ", row, col);
+        toFilled--;
+      }
+    }
+
+    setMatrix(newMatrix);
+  };
+
   return (
     <div className="md:flex-1 mt-4 items-center md:flex flex-col gap-2">
-      <Action />
+      <Action
+        handleClear={handleClear}
+        gameState={gameState}
+        setGameState={setGameState}
+        createRandomPattern={createRandomPattern}
+      />
       <div className="grid my-8 w-max border-gray-600 border-4 border-double grid-cols-[repeat(50,minmax(0,1fr))]">
         {matrix.map((arr) =>
           arr.map((v) => (
@@ -46,17 +101,37 @@ const Board = () => {
   );
 };
 
-const Action = () => {
+const Action = ({
+  handleClear,
+  gameState,
+  setGameState,
+  createRandomPattern,
+}) => {
   return (
     <div className="text-black min-w-max flex space-x-4">
-      <button className="bg-mygreen p-1 active:bg-[#6bcb47]">Pause</button>
-      <button className="bg-mygreen p-1 active:bg-[#6bcb47]">Random</button>
+      <button
+        className="bg-mygreen p-1 active:bg-[#6bcb47]"
+        onClick={() => setGameState(!gameState)}
+      >
+        {gameState ? "Pause" : "Start"}
+      </button>
+      <button
+        className="bg-mygreen p-1 active:bg-[#6bcb47]"
+        onClick={() => createRandomPattern()}
+      >
+        Random
+      </button>
       <select className="text-sm bg-gray-200 outline-none">
         <option>Glider Gun</option>
         <option>Pulsar</option>
         <option>Maximum Density Still Life</option>
       </select>
-      <button className="bg-mygreen p-1  active:bg-[#6bcb47]">Clear</button>
+      <button
+        className="bg-mygreen p-1  active:bg-[#6bcb47]"
+        onClick={() => handleClear()}
+      >
+        Clear
+      </button>
     </div>
   );
 };
