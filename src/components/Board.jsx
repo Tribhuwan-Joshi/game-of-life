@@ -90,7 +90,7 @@ const Board = () => {
     }
 
     return () => clearInterval(id);
-  });
+  }, [gameState]);
 
   return (
     <div className="md:flex-1 mt-4 items-center md:flex flex-col gap-2">
