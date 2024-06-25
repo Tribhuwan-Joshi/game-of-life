@@ -86,7 +86,7 @@ const Board = () => {
         const newMatrix = simulatePattern(matrix);
         setMatrix(newMatrix);
         setGenerationCount((prev) => prev + 1);
-      }, 50);
+      }, 70);
     }
 
     return () => clearInterval(id);
