@@ -2969,12 +2969,13 @@ function simulatePattern(matrix) {
           j + dy < colCount &&
           j + dy >= 0
         ) {
-          if (matrix[i + dx][j + dy] == 1) liveCount++;
+          if (matrix[i + dx][j + dy].value == 1) liveCount++;
         }
       }
+
       if (liveCount < 2 || liveCount > 3)
         newMatrix[i][j].value = 0; // die by under/over/population
-      else if (liveCount == 3 || (liveCount == 2 && matrix[i][j] == 1))
+      else if (liveCount == 3 || (liveCount == 2 && matrix[i][j].value == 1))
         newMatrix[i][j].value = 1;
     }
   }
